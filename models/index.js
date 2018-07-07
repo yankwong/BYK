@@ -2,22 +2,21 @@
 
 const fs = require('fs');
 const path = require('path');
-var basename  = path.basename(__filename);
+let basename  = path.basename(__filename);
 const Sequelize = require ('sequelize');
 
-var env    = process.env.NODE_ENV || 'development';
-var config = require(__dirname + '/../config/config.js')[env];
+let env    = process.env.NODE_ENV || 'development';
+let config = require(__dirname + '/../config/config.js')[env];
 
 let sequelize;
 
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
-  sequelize = new Sequelize(config.database, config.user, config.password, config);
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-
-var db = {};
+let db = {};
 
 // Read all the files in this directory and import them as models
 fs
