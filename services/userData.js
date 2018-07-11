@@ -19,8 +19,19 @@ function getAllUsers(callback) {
       });
 }
 
-function getUserById(userID) {
-
+function getUserById(userId, callback) {
+    db.user.findAll({
+        limit: 1,
+        where: {
+            authorId: userId
+        }
+      })
+      .then((data) => {
+        callback(null, data);
+      })
+      .catch((err) => {
+        callback(err, null);
+      });
 }
 
 
