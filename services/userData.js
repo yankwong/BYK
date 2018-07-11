@@ -23,7 +23,7 @@ function getUserById(userId, callback) {
     db.user.findAll({
         limit: 1,
         where: {
-            authorId: userId
+            id: userId
         }
       })
       .then((data) => {
