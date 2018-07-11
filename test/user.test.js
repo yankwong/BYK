@@ -36,6 +36,7 @@ describe('userData', function () {
         stubFindAll.rejects('TypeError');
 
         userData.getAllUsers((...args) => {
+            expect(args[0]).to.be.an('error');
             expect(args[1]).to.be.null;
 
             done();
