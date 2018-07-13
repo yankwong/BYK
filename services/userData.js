@@ -21,6 +21,13 @@ function getAllUsers(callback) {
 function getUserById(userId, callback) {
     db.user.findAll({
         limit: 1,
+        attributes: [
+          'id',
+          'firstName',
+          'lastName',
+          'userName',
+          'email'
+        ],
         where: {
             id: userId
         }
