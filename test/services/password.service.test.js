@@ -11,20 +11,16 @@ const passwordUtil = require('../../services/password.service');
 describe('password.service', function () {
 
     beforeEach(() => {
-        
     });
 
     afterEach(() => {
-        
     });
 
     context('testBcrypt', function() {
 
         it('should return hash of password', (done) => {
             passwordUtil.testBcrypt((err, hash) => {
-                console.log('heyhey hash', hash);
                 expect(hash).to.not.be.null;
-    
                 done();
             });
         });

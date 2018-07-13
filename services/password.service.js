@@ -12,8 +12,13 @@ function testBcrypt(callback) {
     });
 }
 
-function generateHashedPassword(password) {
 
+function generateHashedPassword(password, callback) {
+    bcrypt.genSalt(saltRounds, (err, salt) => {
+        bcrypt.hash(password, salt, (err, hash) =>{
+            callback(err, hash);
+        })
+    });
 }
 
 module.exports = {

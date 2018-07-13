@@ -1,7 +1,6 @@
 'use strict';
 
-var db = require('../models');
-
+const db = require('../models');
 
 function getAllUsers(callback) {
     db.user.findAll({
@@ -34,11 +33,14 @@ function getUserById(userId, callback) {
       });
 }
 
-function registerUser(applicant) {
-    // use service to hash password and format data
-
-    // store the data to DB
-    // db.user.create({})
+function registerUser(applicant, callback) {
+  data.user.create(applicant)
+  .then((newUser) => {
+    callback(null, newUser.get('id'));
+  })
+  .catch((err) => {
+    callback(err, null);
+  })
 }
 
 

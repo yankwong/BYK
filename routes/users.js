@@ -1,17 +1,16 @@
-var express = require('express');
-
-var userData = require('../services/userData');
-
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const userData = require('../services/userData');
+const passwordService = require('./password.service');
 
 router.get('/', function(req, res, next) {
   userData.getAllUsers((err, data) => {
-    if (err) {
-      console.log('Database Error', err);
-      res.status(500).send('Database Error');
+    if (!err) {
+      res.send(data);
     }
     else {
-      res.send(data);
+      console.log('Database Error', err);
+      res.status(500).send('Database Error');
     }
   });
 });
@@ -20,25 +19,45 @@ router.get('/:id', function(req, res, next) {
   const userId = parseInt(req.params.id);
 
   userData.getUserById(userId, (err, data) => {
-    if (err) {
-      console.log('Database Error', err);
-      res.status(500).send('Database Error');
+    if (!err) {
+      res.send(data);
     }
     else {
-      res.send(data);
+      console.log('Database Error', err);
+      res.status(500).send('Database Error');
     }
   });
 });
 
 router.post('/register', function(req, res, next) {
-  let userName = req.body.username;
-  let firstName = req.body.firstName;
-  let lastName = req.body.lastName;
-  let password = req.body.password;
-  let email = req.body.email;
 
-  // hash the password
-  // store it in the DB
+  let applicant = {
+    userName  : req.body.username,
+    firstName : req.body.firstName,
+    lastName  : req.body.lastName,
+    password  : req.body.password,
+    email     : req.body.email
+  }
+
+  passwordService.generateHashedPassword(applicant.password, (err, hash) => {
+    if (!err) {
+      applicant.password = hash;
+      userData.registerUser(applicant, (err, data) => {
+        if (!err) {
+          res.send(data);
+        }
+        else {
+          console.log('Database Error', err);
+          res.status(500).send('Database Error');
+        }
+      });
+    }
+    else {
+      console.log('Password Hash Error', err);
+      res.status(500).send('Database Error');
+    }
+  });
+
 });
 
 module.exports = router;
