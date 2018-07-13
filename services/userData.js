@@ -7,7 +7,9 @@ function getAllUsers(callback) {
         attributes: [
           'id',
           'firstName',
-          'lastName'
+          'lastName',
+          'userName',
+          'email'
         ]
       })
       .then((data) => {
