@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userData = require('../services/userData');
-const passwordService = require('./password.service');
+const passwordService = require('../services/password.service');
 
 router.get('/', function(req, res, next) {
   userData.getAllUsers((err, data) => {
