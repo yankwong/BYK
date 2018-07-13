@@ -34,7 +34,7 @@ function getUserById(userId, callback) {
 }
 
 function registerUser(applicant, callback) {
-  data.user.create(applicant)
+  db.user.create(applicant)
   .then((newUser) => {
     callback(null, newUser.get('id'));
   })

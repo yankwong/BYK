@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
     }
     else {
       console.log('Database Error', err);
-      res.status(500).send('Database Error');
+      res.sendStatus(500);
     }
   });
 });
@@ -24,7 +24,7 @@ router.get('/:id', function(req, res, next) {
     }
     else {
       console.log('Database Error', err);
-      res.status(500).send('Database Error');
+      res.sendStatus(500);
     }
   });
 });
@@ -32,29 +32,33 @@ router.get('/:id', function(req, res, next) {
 router.post('/register', function(req, res, next) {
 
   let applicant = {
-    userName  : req.body.username,
+    userName  : req.body.userName,
     firstName : req.body.firstName,
     lastName  : req.body.lastName,
     password  : req.body.password,
     email     : req.body.email
   }
 
+  console.log('yoyo', req);
+   
   passwordService.generateHashedPassword(applicant.password, (err, hash) => {
     if (!err) {
       applicant.password = hash;
       userData.registerUser(applicant, (err, data) => {
         if (!err) {
-          res.send(data);
+          res.json({
+            id : data
+          });
         }
         else {
           console.log('Database Error', err);
-          res.status(500).send('Database Error');
+          res.sendStatus(500);
         }
       });
     }
     else {
       console.log('Password Hash Error', err);
-      res.status(500).send('Database Error');
+      res.sendStatus(500);
     }
   });
 
