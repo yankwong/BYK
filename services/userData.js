@@ -34,8 +34,16 @@ function getUserById(userId, callback) {
       });
 }
 
+function registerUser(applicant) {
+    // use service to hash password and format data
+
+    // store the data to DB
+    // db.user.create({})
+}
+
 
 module.exports = {
     getAllUsers : getAllUsers,
-    getUserById : getUserById
+    getUserById : getUserById,
+    registerUser: registerUser
 }

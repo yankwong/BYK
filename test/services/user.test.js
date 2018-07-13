@@ -4,9 +4,9 @@ const assert = require('chai').assert;
 const expect = require('chai').expect;
 let sinon = require('sinon');
 
-const db = require('../models');
+const db = require('../../models');
 
-const userData = require('../services/userData');
+const userData = require('../../services/userData');
 
 describe('userData', function () {
     let stubFindAll;

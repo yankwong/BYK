@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/user/:id', function(req, res, next) {
+router.get('/:id', function(req, res, next) {
   const userId = parseInt(req.params.id);
 
   userData.getUserById(userId, (err, data) => {
@@ -28,6 +28,17 @@ router.get('/user/:id', function(req, res, next) {
       res.send(data);
     }
   });
+});
+
+router.post('/register', function(req, res, next) {
+  let userName = req.body.username;
+  let firstName = req.body.firstName;
+  let lastName = req.body.lastName;
+  let password = req.body.password;
+  let email = req.body.email;
+
+  // hash the password
+  // store it in the DB
 });
 
 module.exports = router;
