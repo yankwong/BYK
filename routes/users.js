@@ -38,8 +38,6 @@ router.post('/register', function(req, res, next) {
     password  : req.body.password,
     email     : req.body.email
   }
-
-  console.log('yoyo', req);
    
   passwordService.generateHashedPassword(applicant.password, (err, hash) => {
     if (!err) {
