@@ -50,7 +50,19 @@ describe('password.service', function () {
             });
         });
 
-        it('should not return a hash if encountered error');
+        it('should pass in an error if encountered error', (done) => {
+            const salt = 'TEST_SALT';
+            const password = 'TEST_PASSWORD';
+
+            bcryptGenSalltStub.yields(null, salt);
+            bcryptHashStub.yields(new Error('Hash Error'), null);
+
+            passwordUtil.generateHashedPassword(password, (...args) => {
+                expect(args[0]).to.be.an('error');
+                expect(args[1]).to.be.null;
+                done();
+            });
+        });
     });
 });
 
