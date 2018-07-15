@@ -14,27 +14,40 @@ describe('password.service', function () {
     let bcryptHashStub;
 
     beforeEach(() => {
-        stubFindAll = sinon.stub(bcrypt, 'genSalt');
-        stubFindAll = sinon.stub(bcrypt, 'hash');
+        bcryptGenSalltStub = sinon.stub(bcrypt, 'genSalt');
+        bcryptHashStub = sinon.stub(bcrypt, 'hash');
     });
 
     afterEach(() => {
+        bcryptGenSalltStub.restore();
+        bcryptHashStub.restore();
     });
 
-    context('testBcrypt', function() {
+    // context('testBcrypt', function() {
 
-        it('should return hash of password', (done) => {
-            passwordUtil.testBcrypt((err, hash) => {
-                expect(hash).to.not.be.null;
-                done();
-            });
-        });
+    //     it('should return hash of password', (done) => {
+    //         passwordUtil.testBcrypt((err, hash) => {
+    //             expect(hash).to.not.be.null;
+    //             done();
+    //         });
+    //     });
         
-    });
+    // });
 
     context('generateHashedPassword', function() {
-        it('should return a hash if encounter no error', () => {
-            passwordUtil.generateHashedPassword();
+        it('should return a hash if encounter no error', (done) => {
+            const salt = 'TEST_SALT';
+            const hash = 'TEST_HASH';
+            const password = 'TEST_PASSWORD';
+
+            bcryptGenSalltStub.yields(null, salt);
+            bcryptHashStub.yields(null, hash);
+
+            passwordUtil.generateHashedPassword(password, (...args) => {
+                expect(args[1]).to.equal(hash);
+                expect(args[0]).to.be.null;
+                done();
+            });
         });
 
         it('should not return a hash if encountered error');
