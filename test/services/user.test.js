@@ -26,9 +26,7 @@ describe('userData', function () {
             stubFindAll.resolves(queryResult);
     
             userData.getAllUsers((...args) => {
-                //assertion goes here, when the callback actually get called
                 expect(queryResult).to.deep.equal(args[1]);
-    
                 done();
             });
         });

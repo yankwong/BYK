@@ -23,17 +23,6 @@ describe('password.service', function () {
         bcryptHashStub.restore();
     });
 
-    // context('testBcrypt', function() {
-
-    //     it('should return hash of password', (done) => {
-    //         passwordUtil.testBcrypt((err, hash) => {
-    //             expect(hash).to.not.be.null;
-    //             done();
-    //         });
-    //     });
-        
-    // });
-
     context('generateHashedPassword', function() {
         it('should return a hash if encounter no error', (done) => {
             const salt = 'TEST_SALT';
