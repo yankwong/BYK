@@ -24,6 +24,10 @@ describe('session.service', function () {
 
             expect(sessionUtil.sessionCookieExist(sessionCookie)).to.be.true;
         });
+
+        it('should return false if sessioncookie does not exist', () => {
+            expect(sessionUtil.sessionCookieExist()).to.be.false;
+        });
     });
 });
 
