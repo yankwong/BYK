@@ -71,4 +71,8 @@ describe('userData', function () {
         });
     });
     
+    context('getUserByLogin', function() {
+        it('should pass in queryResult to callback when there is no error');
+        it('should pass null to callback when encountered error');
+    });
 });

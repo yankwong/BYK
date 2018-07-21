@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userData = require('../services/userData');
 const passwordService = require('../services/password.service');
+const authenticateService = require('../services/authenticate.service');
 
 router.get('/', function(req, res, next) {
   userData.getAllUsers((err, data) => {
@@ -60,6 +61,19 @@ router.post('/register', function(req, res, next) {
     }
   });
 
+});
+
+router.post('/login', function(req, res, next) {
+  let usernameOrEmail = req.usernameOrEmail;
+  let password = req.password;
+
+  passwordService.generateHashedPassword(password, (err, hash) => {
+    if (!err) {
+      // do login: might need to set cookie and session etc
+      authenticateService.doLogin(usernameOrEmail, password);
+    }
+  });
+  
 });
 
 module.exports = router;

@@ -4,9 +4,9 @@ const assert = require('chai').assert;
 const expect = require('chai').expect;
 const sinon = require('sinon');
 
-const sessionUtil = require('../../services/session.service');
+const authenticateUtil = require('../../services/authenticate.service');
 
-describe('session.service', function () {
+describe('authenticate.service', function () {
 
     beforeEach(() => {
         
@@ -22,11 +22,11 @@ describe('session.service', function () {
                 something: 'SOMETHING'
             };
 
-            expect(sessionUtil.sessionCookieExist(sessionCookie)).to.be.true;
+            expect(authenticateUtil.sessionCookieExist(sessionCookie)).to.be.true;
         });
 
         it('should return false if sessioncookie does not exist', () => {
-            expect(sessionUtil.sessionCookieExist()).to.be.false;
+            expect(authenticateUtil.sessionCookieExist()).to.be.false;
         });
     });
 });

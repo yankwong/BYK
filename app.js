@@ -14,12 +14,12 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+// session is stored in server side
 app.use(session({
   secret: process.env.SECRET_KEY,
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
-}))
+  saveUninitialized: true
+}));
 
 app.use(logger('dev'));
 app.use(express.json());

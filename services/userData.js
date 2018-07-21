@@ -2,16 +2,18 @@
 
 const db = require('../models');
 
+const attributeArray = [
+  'id',
+  'firstName',
+  'lastName',
+  'userName',
+  'email'
+];
+
 function getAllUsers(callback) {
     db.user.findAll({
-        attributes: [
-          'id',
-          'firstName',
-          'lastName',
-          'userName',
-          'email'
-        ]
-      })
+      attributes: attributeArray
+    })
       .then((data) => {
         callback(null, data);
       })
@@ -23,13 +25,7 @@ function getAllUsers(callback) {
 function getUserById(userId, callback) {
     db.user.findAll({
         limit: 1,
-        attributes: [
-          'id',
-          'firstName',
-          'lastName',
-          'userName',
-          'email'
-        ],
+        attributes: attributeArray,
         where: {
             id: userId
         }
@@ -40,6 +36,26 @@ function getUserById(userId, callback) {
       .catch((err) => {
         callback(err, null);
       });
+}
+
+function getUserByLogin(login, callback) {
+  db.user.findAll({
+    limit: 1,
+    attributes: attributeArray,
+    where: {
+      [Op.or] : [{
+        email: login
+      }, {
+        userName: login
+      }]
+    }
+  })
+  .then((data) => {
+    callback(null, data);
+  })
+  .catch((err) => {
+    callback(err, null);
+  });
 }
 
 function registerUser(applicant, callback) {
@@ -56,5 +72,6 @@ function registerUser(applicant, callback) {
 module.exports = {
     getAllUsers : getAllUsers,
     getUserById : getUserById,
-    registerUser: registerUser
+    registerUser: registerUser,
+    getUserByLogin : getUserByLogin
 }
