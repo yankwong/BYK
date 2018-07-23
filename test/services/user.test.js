@@ -60,12 +60,12 @@ describe('userData', function () {
 
         it('should pass null to callback when encountered error', (done) => {
             const userId = 2;
+
             stubFindAll.rejects('TypeError');
 
             userData.getUserById(userId, (...args) => {
                 expect(args[0]).to.be.an('error');
                 expect(args[1]).to.be.null;
-    
                 done();
             });
         });
@@ -85,6 +85,16 @@ describe('userData', function () {
             });
         });
 
-        it('should pass null to callback when encountered error');
+        it('should pass null to callback when encountered error', (done) => {
+            const login = 'test@testteste.edu';
+
+            stubFindAll.rejects('TypeError');
+
+            userData.getUserByLogin(login, (...args) => {
+                expect(args[0]).to.be.an('error');
+                expect(args[1]).to.be.null;
+                done();
+            });
+        });
     });
 });
