@@ -1,11 +1,8 @@
 'use strict';
 
-const assert = require('chai').assert;
 const expect = require('chai').expect;
 let sinon = require('sinon');
 let bcrypt = require('bcrypt');
-
-const db = require('../../models');
 
 const passwordUtil = require('../../services/password.service');
 
@@ -54,4 +51,3 @@ describe('password.service', function () {
         });
     });
 });
-
