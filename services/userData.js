@@ -43,7 +43,7 @@ function getUserByLogin(login, callback) {
     limit: 1,
     attributes: attributeArray,
     where: {
-      [Op.or] : [{
+      $or : [{
         email: login
       }, {
         userName: login

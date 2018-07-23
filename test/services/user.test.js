@@ -45,15 +45,15 @@ describe('userData', function () {
 
     context('getUserById', function() {
         it('should pass in queryResult to callback when there is no error', (done) => {
-            let queryResult = ['whatever1', 'whatever2'];
+            const queryResult = ['whatever1', 'whatever2'];
             const userId = 2;
     
             stubFindAll.resolves(queryResult);
     
             userData.getUserById(userId, (...args) => {
                 //assertion goes here, when the callback actually get called
+                expect(args[0]).to.be.null;
                 expect(queryResult).to.deep.equal(args[1]);
-    
                 done();
             });
         });
@@ -72,7 +72,19 @@ describe('userData', function () {
     });
     
     context('getUserByLogin', function() {
-        it('should pass in queryResult to callback when there is no error');
+        it('should pass in queryResult to callback when there is no error', (done) => {
+            const login = 'test@testeste.edu';
+            const queryResult = ['whatever1', 'whatever2'];
+
+            stubFindAll.resolves(queryResult);
+
+            userData.getUserByLogin(login, (...args) => {
+                expect(args[0]).to.be.null;
+                expect(queryResult).to.deep.equal(args[1]);
+                done();
+            });
+        });
+
         it('should pass null to callback when encountered error');
     });
 });
