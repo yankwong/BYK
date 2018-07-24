@@ -72,20 +72,35 @@ router.post('/login', function(req, res, next) {
       if (typeof data !== 'undefined' && data !== null) {
         passwordService.verifyPassword(password, data.password, (err, data) => {
           if (!err) {
-            // set session cookie
-            req.session.user = data;
+            if (data === true) {
+              // set session cookie
+              req.session.user = data;
+              res.sendStatus(200);
+            }
+            else {
+              // wrong password
+              console.log('login error: INCORRECT PASSWORD');
+              res.sendStatus(403);  
+            }
+            
           }
           else {
             // wrong password
+            console.log('login error: VERIFY PASSWORD ERROR', err);
+            res.sendStatus(500);
           }
         });
       }
       else {
         // no user found using login
+        console.log('login error: NO USER FOUND', data);
+        res.sendStatus(404);
       }
     }
     else {
       // get user error
+      console.log('login error: GET USER ERROR', err);
+      res.sendStatus(500);
     }
   });
       
