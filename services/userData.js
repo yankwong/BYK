@@ -10,6 +10,7 @@ const attributeArray = [
   'email'
 ];
 
+
 function getAllUsers(callback) {
     db.user.findAll({
       attributes: attributeArray
@@ -38,10 +39,9 @@ function getUserById(userId, callback) {
       });
 }
 
-function getUserByLogin(login, callback) {
+function getUserByUsernameOrEmail(login, callback) {
   db.user.findAll({
     limit: 1,
-    attributes: attributeArray,
     where: {
       $or : [{
         email: login
@@ -73,5 +73,5 @@ module.exports = {
     getAllUsers : getAllUsers,
     getUserById : getUserById,
     registerUser: registerUser,
-    getUserByLogin : getUserByLogin
+    getUserByUsernameOrEmail : getUserByUsernameOrEmail
 }

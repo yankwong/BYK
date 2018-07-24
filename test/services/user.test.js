@@ -71,14 +71,14 @@ describe('userData', function () {
         });
     });
     
-    context('getUserByLogin', function() {
+    context('getUserByUsernameOrEmail', function() {
         it('should pass in queryResult to callback when there is no error', (done) => {
             const login = 'test@testeste.edu';
             const queryResult = ['whatever1', 'whatever2'];
 
             stubFindAll.resolves(queryResult);
 
-            userData.getUserByLogin(login, (...args) => {
+            userData.getUserByUsernameOrEmail(login, (...args) => {
                 expect(args[0]).to.be.null;
                 expect(queryResult).to.deep.equal(args[1]);
                 done();
@@ -90,7 +90,7 @@ describe('userData', function () {
 
             stubFindAll.rejects('TypeError');
 
-            userData.getUserByLogin(login, (...args) => {
+            userData.getUserByUsernameOrEmail(login, (...args) => {
                 expect(args[0]).to.be.an('error');
                 expect(args[1]).to.be.null;
                 done();

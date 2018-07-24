@@ -67,12 +67,28 @@ router.post('/login', function(req, res, next) {
   let usernameOrEmail = req.usernameOrEmail;
   let password = req.password;
 
-  passwordService.generateHashedPassword(password, (err, hash) => {
+  userData.getUserByUsernameOrEmail(usernameOrEmail, (err, data) => {
     if (!err) {
-      // do login: might need to set cookie and session etc
-      authenticateService.doLogin(usernameOrEmail, password);
+      if (typeof data !== 'undefined' && data !== null) {
+        passwordService.comparePassword(password, data.password, (err, data) => {
+          if (!err) {
+            // set session cookie
+            req.session.user = data;
+          }
+          else {
+            // wrong password
+          }
+        });
+      }
+      else {
+        // no user found using login
+      }
+    }
+    else {
+      // get user error
     }
   });
+      
   
 });
 
