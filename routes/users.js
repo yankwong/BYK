@@ -70,7 +70,7 @@ router.post('/login', function(req, res, next) {
   userData.getUserByUsernameOrEmail(usernameOrEmail, (err, data) => {
     if (!err) {
       if (typeof data !== 'undefined' && data !== null) {
-        passwordService.verifyPassword(password, data.password, (err, data) => {
+        passwordService.verifyPassword(password, data[0].password, (err, data) => {
           if (!err) {
             if (data === true) {
               // set session cookie
