@@ -21,6 +21,8 @@ function generateHashedPassword(password, callback) {
 }
 
 function verifyPassword(plainTextPassword, hash, callback) {
+    console.log("!!!!!======>!!!!!", plainTextPassword, hash);
+    
     bcrypt.compare(plainTextPassword, hash, function (err, res) {
         callback(err, res);
       });

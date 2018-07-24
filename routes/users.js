@@ -64,8 +64,8 @@ router.post('/register', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-  let usernameOrEmail = req.usernameOrEmail;
-  let password = req.password;
+  let usernameOrEmail = req.body.usernameOrEmail;
+  let password = req.body.password;
 
   userData.getUserByUsernameOrEmail(usernameOrEmail, (err, data) => {
     if (!err) {
