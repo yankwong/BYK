@@ -56,8 +56,8 @@ describe('password.service', function () {
 
     context('verifyPassword', function() {
         it('should return boolean "true" if password and hash matches', (done)=> {
-            let plainTxtPassword = 'IT IS A PASSWORD';
-            let correctHash = 'THISISALLGOOD';
+            const plainTxtPassword = 'IT IS A PASSWORD';
+            const correctHash = 'THISISALLGOOD';
 
             bcryptCompareStub.yields(null, true);
 
@@ -69,8 +69,8 @@ describe('password.service', function () {
         });
 
         it('should return boolean "false" if password and hash does not matches', (done) => {
-            let plainTxtPassword = 'IT IS A PASSWORD';
-            let wrongHash = 'THISISALLWRONG';
+            const plainTxtPassword = 'IT IS A PASSWORD';
+            const wrongHash = 'THISISALLWRONG';
 
             bcryptCompareStub.yields(null, false);
 
@@ -81,6 +81,17 @@ describe('password.service', function () {
             });
         });
 
-        it('should return an error if encountered error during comparing');
+        it('should return an error if encountered error during comparing', (done) => {
+            const plainTxtPassword = 'IT IS A PASSWORD';
+            const correctHash = 'THISISALLGOOD';
+
+            bcryptCompareStub.yields(new Error('Hash Error'), null);
+
+            passwordUtil.verifyPassword(plainTxtPassword, correctHash, (...args) => {
+                expect(args[0]).to.be.an('error');
+                expect(args[1]).to.be.null;
+                done();
+            });
+        });
     });
 });
