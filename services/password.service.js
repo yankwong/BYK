@@ -20,14 +20,14 @@ function generateHashedPassword(password, callback) {
     });
 }
 
-function comparePassword(plainTextPassword, hash, callback) {
+function verifyPassword(plainTextPassword, hash, callback) {
     bcrypt.compare(plainTextPassword, hash, function (err, res) {
-        callback(res);
+        callback(err, res);
       });
 }
 
 module.exports = {
     testBcrypt : testBcrypt,
     generateHashedPassword: generateHashedPassword,
-    comparePassword: comparePassword
+    verifyPassword: verifyPassword
 }
