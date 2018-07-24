@@ -9,15 +9,18 @@ const passwordUtil = require('../../services/password.service');
 describe('password.service', function () {
     let bcryptGenSalltStub;
     let bcryptHashStub;
+    let bcryptCompareStub;
 
     beforeEach(() => {
         bcryptGenSalltStub = sinon.stub(bcrypt, 'genSalt');
         bcryptHashStub = sinon.stub(bcrypt, 'hash');
+        bcryptCompareStub = sinon.stub(bcrypt, 'compare');
     });
 
     afterEach(() => {
         bcryptGenSalltStub.restore();
         bcryptHashStub.restore();
+        bcryptCompareStub.restore();
     });
 
     context('generateHashedPassword', function() {
@@ -49,5 +52,35 @@ describe('password.service', function () {
                 done();
             });
         });
+    });
+
+    context('verifyPassword', function() {
+        it('should return boolean "true" if password and hash matches', (done)=> {
+            let plainTxtPassword = 'IT IS A PASSWORD';
+            let correctHash = 'THISISALLGOOD';
+
+            bcryptCompareStub.yields(null, true);
+
+            passwordUtil.verifyPassword(plainTxtPassword, correctHash, (...args) => {
+                expect(args[0]).to.be.null;
+                expect(args[1]).to.equal(true);
+                done();
+            });
+        });
+
+        it('should return boolean "false" if password and hash does not matches', (done) => {
+            let plainTxtPassword = 'IT IS A PASSWORD';
+            let wrongHash = 'THISISALLWRONG';
+
+            bcryptCompareStub.yields(null, false);
+
+            passwordUtil.verifyPassword(plainTxtPassword, wrongHash, (...args) => {
+                expect(args[0]).to.be.null;
+                expect(args[1]).to.equal(false);
+                done();
+            });
+        });
+
+        it('should return an error if encountered error during comparing');
     });
 });
