@@ -29,10 +29,5 @@ describe('authenticate.service', function () {
             expect(authenticateUtil.sessionCookieExist()).to.be.false;
         });
     });
-    
-    context('setUserSession', function() {
-        it('should set a session cookie');
-    });
-    
 });
 
