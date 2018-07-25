@@ -11,17 +11,20 @@ chai.should();
 chai.use(sinonChai);
 
 describe('authenticate.service', function () {
-    let consoleLogStub;
+    let consoleLogSpy;
     let processEnv;
 
     beforeEach(() => {
         processEnv = process.env.NODE_ENV;
-        // consoleLogStub = sinon.stub(console, 'log');
+        
+        consoleLogSpy = sinon.spy(console, 'log');
+
     });
 
     afterEach(() => {
         process.env.NODE_ENV = processEnv;
-        // consoleLogStub.restore();
+
+        consoleLogSpy.restore();
     });
 
     context('logError', function() {
@@ -30,10 +33,16 @@ describe('authenticate.service', function () {
 
             errorHandler.logError(new Error('TypeError'));
 
-            // consoleLogStub.should.have.been.called;
+            expect(consoleLogSpy).to.be.calledOnce;
         });
 
-        it('should return false if sessioncookie does not exist');
+        it('should NOT log error if current env is production', () => {
+            process.env.NODE_ENV = 'production';
+
+            errorHandler.logError(new Error('TypeError'));
+
+            expect(consoleLogSpy).to.not.be.called;
+        });
     });
 });
 
