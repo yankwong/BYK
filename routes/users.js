@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userData = require('../services/userData');
 const passwordService = require('../services/password.service');
-const authenticateService = require('../services/authenticate.service');
+const dataUtilities = require('../services/utilities/data.service');
 
 router.get('/', function(req, res, next) {
   userData.getAllUsers((err, data) => {
@@ -69,7 +69,7 @@ router.post('/login', function(req, res, next) {
 
   userData.getUserByUsernameOrEmail(usernameOrEmail, (err, data) => {
     if (!err) {
-      if (typeof data !== 'undefined' && data !== null) {
+      if (dataUtilities.dataExists(data)) {
         passwordService.verifyPassword(password, data[0].password, (err, data) => {
           if (!err) {
             if (data === true) {
@@ -78,27 +78,22 @@ router.post('/login', function(req, res, next) {
               res.sendStatus(200);
             }
             else {
-              // wrong password
               console.log('login error: INCORRECT PASSWORD');
               res.sendStatus(403);  
             }
-            
           }
           else {
-            // wrong password
             console.log('login error: VERIFY PASSWORD ERROR', err);
             res.sendStatus(500);
           }
         });
       }
       else {
-        // no user found using login
         console.log('login error: NO USER FOUND', data);
         res.sendStatus(404);
       }
     }
     else {
-      // get user error
       console.log('login error: GET USER ERROR', err);
       res.sendStatus(500);
     }
