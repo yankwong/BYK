@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../main');
+var app = require('../app');
 var debug = require('debug')('byk:server');
 var http = require('http');
 var db = require('../models');
